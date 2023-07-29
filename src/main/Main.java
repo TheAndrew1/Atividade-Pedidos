@@ -124,13 +124,7 @@ public class Main {
 
     static void mostrarClientes(List<Cliente> clientes){
         for(Cliente cliente : clientes){
-            System.out.println(cliente.getNome() + ", " + cliente.getIdade() + " anos");
-            System.out.println("Endereços:");
-            for (int i = 0; i < cliente.getEnderecos().size(); i++)
-            {
-                System.out.println((i+1) + " - " + cliente.getEnderecos().get(i).getRua() + ", " + cliente.getEnderecos().get(i).getNumero());
-            }
-            System.out.println("");
+            mostrarCliente(cliente);
         }
     }
 
