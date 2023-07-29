@@ -139,7 +139,7 @@ public class Cliente {
     }
 
     public static void mostrarCliente(Cliente cliente) {
-        System.out.println(cliente.getNome() + ", " + cliente.getIdade() + " anos");
+        System.out.println("Nome:" + cliente.getNome() + ", " + cliente.getIdade() + " anos");
         System.out.println("Endereços:");
         for (int i = 0; i < cliente.getEnderecos().size(); i++) {
             System.out.println((i + 1) + " - " + cliente.getEnderecos().get(i).getRua() + ", " + cliente.getEnderecos().get(i).getNumero());
