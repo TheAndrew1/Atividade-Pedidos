@@ -11,33 +11,17 @@ public class Main {
 
         while (true) {
             switch (menu(scan)) {
-                case 1:
-                    Cliente.mostrarClientes(clientes);
-                    break;
+                case 1 -> Cliente.mostrarClientes(clientes);
+                case 2 -> Cliente.cadastrarCliente(clientes, scan);
+                case 3 -> Cliente.editarCliente(clientes, scan);
+                case 4 -> {
+                }
 
-                case 2:
-                    Cliente.cadastrarCliente(clientes, scan);
-                    break;
+                case 5 -> {
+                }
 
-                case 3:
-                    Cliente.editarCliente(clientes, scan);
-                    break;
-
-                case 4:
-
-                    break;
-
-                case 5:
-
-                    break;
-
-                case 6:
-                    System.exit(0);
-                    break;
-
-                default:
-                    System.out.println("Valor inválido!");
-                    break;
+                case 6 -> System.exit(0);
+                default -> System.out.println("Valor inválido!");
             }
         }
     }
