@@ -11,15 +11,17 @@ public class Main {
 
         while (true) {
             switch (menu(scan)){
-                case 1 -> cadastrarCliente(clientes, scan);
+                case 1 -> mostrarClientes(clientes);
 
-                case 2 -> editarCliente(clientes, scan);
+                case 2 -> cadastrarCliente(clientes, scan);
 
-                case 3 -> cadastrarCliente(clientes, scan);
+                case 3 -> editarCliente(clientes, scan);
 
-                case 4 -> editarCliente(clientes, scan);
+                case 4 -> cadastrarCliente(clientes, scan);
 
-                case 5 -> System.exit(0);
+                case 5 -> editarCliente(clientes, scan);
+
+                case 6 -> System.exit(0);
 
                 default -> System.out.println("Valor inválido!");
             }
@@ -31,11 +33,12 @@ public class Main {
         int pedidosEncerrados;
 
         System.out.println("");
-        System.out.println("1 - Cadastrar cliente");
-        System.out.println("2 - Editar cliente");
-        System.out.println("3 - Realizar pedido");
-        System.out.println("4 - Encerrar pedido");
-        System.out.println("5 - Sair");
+        System.out.println("1 - Mostrar clientes");
+        System.out.println("2 - Cadastrar cliente");
+        System.out.println("3 - Editar cliente");
+        System.out.println("4 - Realizar pedido");
+        System.out.println("5 - Encerrar pedido");
+        System.out.println("6 - Sair");
         System.out.println("");
         System.out.println("Pedidos no dia: " + " Pedidos abertos: " + " Pedidos encerrados: ");
 
@@ -67,33 +70,41 @@ public class Main {
             cont++;
         }
 
-        clientes.add(new Cliente(nome, idade, enderecos));
+        int id = clientes.size() + 1;
+
+        clientes.add(new Cliente(id, nome, idade, enderecos));
     }
 
     static void editarCliente(List<Cliente> clientes, Scanner scan){
-        System.out.println("Digite o nome do cliente: ");
-        String nome = scan.next();
-        boolean find = false;
+        Cliente cliente = buscarCliente(clientes, scan);
 
-        for (Cliente cliente : clientes)
-        {
-            if (cliente.getNome().equals(nome)){
-                System.out.println("");
-                System.out.println(cliente.getNome() + ", " + cliente.getIdade() + " anos");
-                System.out.println("Endereços:");
-                for (int i = 0; i < cliente.getEnderecos().size(); i++)
-                {
-                    System.out.println(cliente.getEnderecos().get(i).getRua() + ", " + cliente.getEnderecos().get(i).getNumero());
-                }
-                System.out.println("");
-
-                find = true;
-            }
+        if (cliente == null){
+            System.out.println("Cliente não encontrado!");
+            System.out.println("");
+            return;
         }
 
-        if (!find){
-            System.out.println("Pessoa não encontrada!");
-            System.out.println("");
+        mostrarCliente(cliente);
+
+        System.out.println("Editar: 1 - nome, 2 - idade, 3 - endereços");
+        int opcao = scan.nextInt();
+
+        switch (opcao){
+            case 1 -> {
+                System.out.println("Digite o novo nome do cliente: ");
+                String nome = scan.next();
+                clientes.get(cliente.getId() - 1).setNome(nome);
+                System.out.println("Nome editado com sucesso!");
+            }
+            case 2 -> {
+                System.out.println("Digite a nova idade do cliente: ");
+                int idade = scan.nextInt();
+                clientes.get(cliente.getId() - 1).setIdade(idade);
+                System.out.println("Idade editada com sucesso!");
+            }
+            default -> {
+                System.out.println("Opção inválida!");
+            }
         }
     }
 
@@ -109,5 +120,27 @@ public class Main {
         }
 
         return null;
+    }
+
+    static void mostrarClientes(List<Cliente> clientes){
+        for(Cliente cliente : clientes){
+            System.out.println(cliente.getNome() + ", " + cliente.getIdade() + " anos");
+            System.out.println("Endereços:");
+            for (int i = 0; i < cliente.getEnderecos().size(); i++)
+            {
+                System.out.println((i+1) + " - " + cliente.getEnderecos().get(i).getRua() + ", " + cliente.getEnderecos().get(i).getNumero());
+            }
+            System.out.println("");
+        }
+    }
+
+    static void mostrarCliente(Cliente cliente){
+        System.out.println(cliente.getNome() + ", " + cliente.getIdade() + " anos");
+        System.out.println("Endereços:");
+        for (int i = 0; i < cliente.getEnderecos().size(); i++)
+        {
+            System.out.println((i+1) + " - " + cliente.getEnderecos().get(i).getRua() + ", " + cliente.getEnderecos().get(i).getNumero());
+        }
+        System.out.println("");
     }
 }
