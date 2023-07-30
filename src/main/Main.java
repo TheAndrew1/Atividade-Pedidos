@@ -28,6 +28,7 @@ public class Main {
     static int menu(Scanner scan, List<Pedido> pedidos) {
 
         System.out.println("");
+        System.out.println("|Restaturante tem de tudo|");
         System.out.println("1 - Mostrar clientes");
         System.out.println("2 - Cadastrar cliente");
         System.out.println("3 - Editar cliente");
@@ -42,8 +43,8 @@ public class Main {
         int pedidosEncerrados = totalPedidos - pedidosAbertos;
 
         System.out.println("Pedidos no dia: " + totalPedidos +
-                " Pedidos abertos: " + pedidosAbertos +
-                " Pedidos encerrados: " + pedidosEncerrados);
+                " | Pedidos abertos: " + pedidosAbertos +
+                " | Pedidos encerrados: " + pedidosEncerrados);
 
 
         return scan.nextInt();

@@ -1,6 +1,8 @@
 package main;
 
 import javax.xml.transform.stream.StreamSource;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -174,11 +176,11 @@ public class Pedido {
     }
 
     public static void mostrarPedido(Pedido pedido) {
-            System.out.println("Id: " + pedido.getId());
-            System.out.println("Cliente: " + pedido.getCliente().getNome());
-            System.out.println("Item do Pedido: " + pedido.getItem());
-            System.out.println("Status do Pedido: " + (pedido.isEncerrado() ? "Finalizado" : "Aberto"));
-            System.out.println("---------------------------");
+        System.out.println("Id: " + pedido.getId());
+        System.out.println("Cliente: " + pedido.getCliente().getNome());
+        System.out.println("Item do Pedido: " + pedido.getItem());
+        System.out.println("Status do Pedido: " + (pedido.isEncerrado() ? "Finalizado" : "Aberto"));
+        System.out.println("---------------------------");
 
     }
     public static Pedido buscarPedido(List<Pedido> pedidos, int id) {
@@ -210,6 +212,22 @@ public class Pedido {
 
         pedido.setEncerrado(true);
         System.out.println("Pedido finalizado com sucesso!");
+        pedido.criarArquivoTxt();
+    }
+    public void criarArquivoTxt() {
+        String Arquivo = "Pedido-ID" + this.getId() + ".txt";
+        try {
+            FileWriter arquivo = new FileWriter(Arquivo);
+            arquivo.write("ID: " + this.getId() + "\n");
+            arquivo.write("Cliente: " + this.getCliente().getNome() + "\n");
+            arquivo.write("Item do Pedido: " + this.getItem() + "\n");
+            arquivo.write("Status do Pedido: " + (this.isEncerrado() ? "Finalizado" : "Aberto") + "\n");
+            arquivo.close();
+            System.out.println("Arquivo " + Arquivo + " criado com sucesso!");
+        } catch (IOException e) {
+            System.out.println("Erro ao criar arquivo " + Arquivo);
+            e.printStackTrace();
+        }
     }
 
 
