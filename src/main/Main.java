@@ -15,12 +15,11 @@ public class Main {
                 case 1 -> Cliente.mostrarClientes(clientes);
                 case 2 -> Cliente.cadastrarCliente(clientes, scan);
                 case 3 -> Cliente.editarCliente(clientes, scan);
-                case 4 -> Pedido.realizarPedido(clientes, enderecos, scan);
-
-                case 5 -> {
+                case 4 -> Pedido.realizarPedido(clientes, enderecos, scan, pedidos);
+                case 5 ->  Pedido.mostrarPedidos(pedidos);
+                case 6-> { // finalizar pedido
                 }
-
-                case 6 -> System.exit(0);
+                case 7 -> System.exit(0);
                 default -> System.out.println("Valor inválido!");
             }
         }
@@ -35,8 +34,9 @@ public class Main {
         System.out.println("2 - Cadastrar cliente");
         System.out.println("3 - Editar cliente");
         System.out.println("4 - Realizar pedido");
-        System.out.println("5 - Encerrar pedido");
-        System.out.println("6 - Sair");
+        System.out.println("5 - Visualizar pedidos");
+        System.out.println("6 - Encerrar pedido");
+        System.out.println("7 - Sair");
         System.out.println("");
         System.out.println("Pedidos no dia: " + " Pedidos abertos: " + " Pedidos encerrados: ");
 
