@@ -9,15 +9,25 @@ public class Cliente {
     private String nome;
     private int idade;
     private List<Endereco> enderecos;
-
-    public Cliente() {
+    private List<Pedido> pedidos;
+    public List<Pedido> getPedidos() {
+        return pedidos;
     }
 
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+    public void adicionarPedido(Pedido pedido) {
+        this.pedidos.add(pedido);
+    }
+    public Cliente() {
+    }
     public Cliente(int id, String nome, int idade, List<Endereco> enderecos) {
         this.id = id;
         this.nome = nome;
         this.idade = idade;
         this.enderecos = enderecos;
+        this.pedidos = new ArrayList<>();
     }
 
     public int getId() {

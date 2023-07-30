@@ -9,12 +9,13 @@ public class Pedido {
     private List <Cliente> clientes = new ArrayList<>();
     private String item;
     private  List<Endereco> enderecos;
+
     public boolean isEncerrado() {
         return encerrado;
     }
 
-    public void setEncerrado(boolean encerrado) {
-        this.encerrado = encerrado;
+    public static void setEncerrado(boolean encerrado) {
+        encerrado = encerrado;
     }
 
     public List<Cliente> getClientes() {
@@ -95,7 +96,12 @@ public class Pedido {
         }
 
         Pedido.setItem(item);
+        Pedido.setEncerrado(false);
+        cliente.adicionarPedido(new Pedido(false, clientes, item, enderecos));
         System.out.println("Pedido realizado com sucesso!");
+
+
+
     }
 
 
