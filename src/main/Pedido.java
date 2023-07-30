@@ -5,17 +5,40 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 public class Pedido {
+    private static int contadorPedidos = 1;
+    private int id;
     private boolean encerrado;
-    private List <Cliente> clientes = new ArrayList<>();
+    private List<Cliente> clientes = new ArrayList<>();
+    private Cliente cliente;
     private String item;
-    private  List<Endereco> enderecos;
+    private List<Endereco> enderecos;
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public static int getContadorPedidos() {
+        return contadorPedidos;
+    }
+
 
     public boolean isEncerrado() {
         return encerrado;
     }
 
-    public static void setEncerrado(boolean encerrado) {
-        encerrado = encerrado;
+    public void setEncerrado(boolean encerrado) {
+        this.encerrado = encerrado; // Corrigir atribuição aqui
     }
 
     public List<Cliente> getClientes() {
@@ -45,14 +68,16 @@ public class Pedido {
     public Pedido(){
     }
 
-    public Pedido(boolean encerrado, List<Cliente> clientes, String item, List<Endereco> enderecos) {
+    public Pedido(boolean encerrado, Cliente cliente, String item, List<Endereco> enderecos) {
         this.encerrado = encerrado;
-        this.clientes = clientes;
+        this.cliente = cliente;
         this.item = item;
         this.enderecos = enderecos;
     }
-
-    public static void realizarPedido(List<Cliente> clientes, List<Endereco> enderecos, Scanner scan,List<Pedido> pedidos) {
+    public static void incrementarContadorPedidos() {
+        contadorPedidos++;
+    }
+    public static void realizarPedido(List<Cliente> clientes, List<Endereco> enderecos, Scanner scan, List<Pedido> pedidos) {
         Cliente cliente = Cliente.buscarCliente(clientes, scan);
 
         if (cliente == null) {
@@ -94,15 +119,15 @@ public class Pedido {
                 System.out.println("Opção inválida!");
                 return;
         }
-        Pedido.setItem(item);
-        Pedido.setEncerrado(false);
-        Pedido pedido = new Pedido(false, clientes, item, enderecos);
-        cliente.adicionarPedido(new Pedido(false, clientes, item, enderecos));
+
+        Pedido pedido = new Pedido(false, cliente, item, enderecos);
+        int novoId = pedidos.size() + 1;
+        pedido.setId(novoId);
+        cliente.adicionarPedido(pedido);
         pedidos.add(pedido);
+
         System.out.println("Pedido realizado com sucesso!");
-
     }
-
     public static void mostrarPedidos(List<Pedido> pedidos){
         int item;
         Scanner scan = new Scanner(System.in);
@@ -122,17 +147,19 @@ public class Pedido {
 
     public static void mostrarTodosPedidos(List<Pedido> pedidos) {
         for (Pedido pedido : pedidos) {
-            System.out.println("Cliente: " + pedido.getClientes().get(0).getNome());
+            System.out.println("Id: " + pedido.getId());
+            System.out.println("Cliente: " + pedido.getCliente().getNome());
             System.out.println("Item do Pedido: " + pedido.getItem());
-            System.out.println("Status do Pedido: " + (pedido.isEncerrado() ? "Encerrado" : "Aberto"));
+            System.out.println("Status do Pedido: " + (pedido.isEncerrado() ? "Finalizado" : "Aberto"));
             System.out.println("---------------------------");
         }
     }
+
     public static void mostrarAbertos(List<Pedido> pedidos) {
         System.out.println("Pedidos em aberto:");
         for (Pedido pedido : pedidos) {
             if (!pedido.isEncerrado()) {
-                mostrarTodosPedidos(pedidos);
+                mostrarPedido(pedido);
             }
         }
     }
@@ -141,10 +168,52 @@ public class Pedido {
         System.out.println("Pedidos finalizados:");
         for (Pedido pedido : pedidos) {
             if (pedido.isEncerrado()) {
-                mostrarTodosPedidos(pedidos);
+                mostrarPedido(pedido);
             }
         }
     }
 
+    public static void mostrarPedido(Pedido pedido) {
+            System.out.println("Id: " + pedido.getId());
+            System.out.println("Cliente: " + pedido.getCliente().getNome());
+            System.out.println("Item do Pedido: " + pedido.getItem());
+            System.out.println("Status do Pedido: " + (pedido.isEncerrado() ? "Finalizado" : "Aberto"));
+            System.out.println("---------------------------");
+
+    }
+    public static Pedido buscarPedido(List<Pedido> pedidos, int id) {
+        for (Pedido pedido : pedidos) {
+            if (pedido.getId() == id) {
+                return pedido;
+            }
+        }
+        return null;
+    }
+    public static void finalizarPedido(List<Pedido> pedidos, Scanner scan) {
+        System.out.println("Pedidos em aberto:");
+        mostrarAbertos(pedidos);
+
+        System.out.println("Digite o id do pedido que deseja finalizar:");
+        int idPedido = scan.nextInt();
+
+        Pedido pedido = buscarPedido(pedidos, idPedido);
+
+        if (pedido == null) {
+            System.out.println("Pedido não encontrado!");
+            return;
+        }
+
+        if (pedido.isEncerrado()) {
+            System.out.println("Este pedido já está finalizado!");
+            return;
+        }
+
+        pedido.setEncerrado(true);
+        System.out.println("Pedido finalizado com sucesso!");
+    }
+
 
 }
+
+
+
