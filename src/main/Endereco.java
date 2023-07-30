@@ -1,5 +1,8 @@
 package main;
 
+import java.util.List;
+import java.util.Scanner;
+
 public class Endereco {
     private String rua;
     private int numero;
@@ -26,5 +29,17 @@ public class Endereco {
 
     public void setNumero(int numero) {
         this.numero = numero;
+    }
+
+    public static Endereco buscarEndereco(List<Endereco> enderecos, Scanner scan) {
+        System.out.println("Digite o numero da residencia: ");
+        int numero = scan.nextInt();
+
+        for (Endereco endereco : enderecos) {
+            if (endereco.getNumero()==(numero)) {
+                return endereco;
+            }
+        }
+        return null;
     }
 }

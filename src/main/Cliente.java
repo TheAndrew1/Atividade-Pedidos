@@ -128,7 +128,6 @@ public class Cliente {
                 return cliente;
             }
         }
-
         return null;
     }
 

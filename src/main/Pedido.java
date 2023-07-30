@@ -1,13 +1,14 @@
 package main;
 
+import javax.xml.transform.stream.StreamSource;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Scanner;
 public class Pedido {
     private boolean encerrado;
     private List <Cliente> clientes = new ArrayList<>();
     private String item;
-    private List<Endereco> enderecos;
+    private  List<Endereco> enderecos;
     public boolean isEncerrado() {
         return encerrado;
     }
@@ -28,8 +29,8 @@ public class Pedido {
         return item;
     }
 
-    public void setItem(String item) {
-        this.item = item;
+    public static void setItem(String item) {
+        item = item;
     }
 
     public List<Endereco> getEnderecos() {
@@ -49,6 +50,54 @@ public class Pedido {
         this.item = item;
         this.enderecos = enderecos;
     }
+
+    public static void realizarPedido(List<Cliente> clientes, List<Endereco> enderecos, Scanner scan) {
+        Cliente cliente = Cliente.buscarCliente(clientes, scan);
+
+        if (cliente == null) {
+            System.out.println("Cliente não encontrado!");
+            return;
+        }
+
+        System.out.println("Cliente selecionado:");
+        Cliente.mostrarCliente(cliente);
+
+        System.out.println("Selecione o endereço:");
+        Endereco endereco = Endereco.buscarEndereco(enderecos, scan);
+
+        if (enderecos == null) {
+            System.out.println("Endereco não encontrado!");
+            System.out.println("");
+            return;
+        }
+
+        System.out.println("Escolha o item do pedido:");
+        System.out.println("1- pizza");
+        System.out.println("2- hamburguer");
+        System.out.println("3- sushi");
+
+        int opcao = scan.nextInt();
+        String item;
+
+        switch (opcao) {
+            case 1:
+                item = "pizza";
+                break;
+            case 2:
+                item = "hamburguer";
+                break;
+            case 3:
+                item = "sushi";
+                break;
+            default:
+                System.out.println("Opção inválida!");
+                return;
+        }
+
+        Pedido.setItem(item);
+        System.out.println("Pedido realizado com sucesso!");
+    }
+
 
 
 }
