@@ -8,14 +8,14 @@ public class Main {
     public static void main(String[] args) {
         List<Cliente> clientes = new ArrayList<>();
         Scanner scan = new Scanner(System.in);
-        List<Endereco> enderecos = new ArrayList<>();
         List<Pedido> pedidos = new ArrayList<>();
+
         while (true) {
             switch (menu(scan, pedidos)) {
                 case 1 -> Cliente.mostrarClientes(clientes);
                 case 2 -> Cliente.cadastrarCliente(clientes, scan);
                 case 3 -> Cliente.editarCliente(clientes, scan);
-                case 4 -> Pedido.realizarPedido(clientes, enderecos, scan, pedidos);
+                case 4 -> Pedido.realizarPedido(clientes, scan, pedidos);
                 case 5 ->  Pedido.mostrarPedidos(pedidos);
                 case 6-> { Pedido.finalizarPedido(pedidos, scan);
                 }

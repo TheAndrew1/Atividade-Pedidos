@@ -13,7 +13,7 @@ public class Pedido {
     private List<Cliente> clientes = new ArrayList<>();
     private Cliente cliente;
     private String item;
-    private List<Endereco> enderecos;
+    private Endereco endereco;
 
     public Cliente getCliente() {
         return cliente;
@@ -59,27 +59,25 @@ public class Pedido {
         item = item;
     }
 
-    public List<Endereco> getEnderecos() {
-        return enderecos;
+    public Endereco getEndereco() {
+        return endereco;
     }
 
-    public void setEnderecos(List<Endereco> enderecos) {
-        this.enderecos = enderecos;
-    }
+    public void setEndereco(Endereco endereco) { this.endereco = endereco; }
 
     public Pedido(){
     }
 
-    public Pedido(boolean encerrado, Cliente cliente, String item, List<Endereco> enderecos) {
+    public Pedido(boolean encerrado, Cliente cliente, String item, Endereco endereco) {
         this.encerrado = encerrado;
         this.cliente = cliente;
         this.item = item;
-        this.enderecos = enderecos;
+        this.endereco = endereco;
     }
     public static void incrementarContadorPedidos() {
         contadorPedidos++;
     }
-    public static void realizarPedido(List<Cliente> clientes, List<Endereco> enderecos, Scanner scan, List<Pedido> pedidos) {
+    public static void realizarPedido(List<Cliente> clientes, Scanner scan, List<Pedido> pedidos) {
         Cliente cliente = Cliente.buscarCliente(clientes, scan);
 
         if (cliente == null) {
@@ -91,9 +89,9 @@ public class Pedido {
         Cliente.mostrarCliente(cliente);
 
         System.out.println("Selecione o endereço:");
-        Endereco endereco = Endereco.buscarEndereco(enderecos, scan);
+        Endereco endereco = Endereco.buscarEndereco(cliente.getEnderecos(), scan);
 
-        if (enderecos == null) {
+        if (endereco == null) {
             System.out.println("Endereço não encontrado!");
             System.out.println("");
             return;
@@ -122,7 +120,7 @@ public class Pedido {
                 return;
         }
 
-        Pedido pedido = new Pedido(false, cliente, item, enderecos);
+        Pedido pedido = new Pedido(false, cliente, item, endereco);
         int novoId = pedidos.size() + 1;
         pedido.setId(novoId);
         cliente.adicionarPedido(pedido);
@@ -215,11 +213,12 @@ public class Pedido {
         pedido.criarArquivoTxt();
     }
     public void criarArquivoTxt() {
-        String Arquivo = "Pedido-ID" + this.getId() + ".txt";
+        String Arquivo = "Pedido-ID-" + this.getId() + ".txt";
         try {
             FileWriter arquivo = new FileWriter(Arquivo);
             arquivo.write("ID: " + this.getId() + "\n");
             arquivo.write("Cliente: " + this.getCliente().getNome() + "\n");
+            arquivo.write("Endereço: Rua " + this.getEndereco().getRua() + ", " + this.getEndereco().getNumero() + "\n");
             arquivo.write("Item do Pedido: " + this.getItem() + "\n");
             arquivo.write("Status do Pedido: " + (this.isEncerrado() ? "Finalizado" : "Aberto") + "\n");
             arquivo.close();
@@ -229,8 +228,6 @@ public class Pedido {
             e.printStackTrace();
         }
     }
-
-
 }
 
 

@@ -4,15 +4,26 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Endereco {
+    private int id;
+
     private String rua;
     private int numero;
 
     public Endereco() {
     }
 
-    public Endereco(String rua, int numero) {
+    public Endereco(int id, String rua, int numero) {
+        this.id = id;
         this.rua = rua;
         this.numero = numero;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getRua() {
@@ -32,11 +43,11 @@ public class Endereco {
     }
 
     public static Endereco buscarEndereco(List<Endereco> enderecos, Scanner scan) {
-        System.out.println("Digite o numero da residencia: ");
-        int numero = scan.nextInt();
+        System.out.println("Digite id do endereço: ");
+        int id = scan.nextInt();
 
         for (Endereco endereco : enderecos) {
-            if (endereco.getNumero()==(numero)) {
+            if (endereco.getId() == id) {
                 return endereco;
             }
         }

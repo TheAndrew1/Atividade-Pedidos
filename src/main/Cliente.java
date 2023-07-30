@@ -70,9 +70,9 @@ public class Cliente {
         int idade = scan.nextInt();
 
         List<Endereco> enderecos = new ArrayList<>();
-        int cont = 1;
+        int idEndereco = 1;
         while (true) {
-            System.out.println("Endereço " + cont + " : (Digite 0 para sair)");
+            System.out.println("Endereço " + idEndereco + " : (Digite 0 para sair)");
 
             System.out.println("Digite o nome da rua: ");
             scan.nextLine();
@@ -84,9 +84,9 @@ public class Cliente {
 
             System.out.println("Digite o numero da residência: ");
             int numero = scan.nextInt();
-            enderecos.add(new Endereco(rua, numero));
+            enderecos.add(new Endereco(idEndereco, rua, numero));
 
-            cont++;
+            idEndereco++;
         }
 
         int id = clientes.size() + 1;
